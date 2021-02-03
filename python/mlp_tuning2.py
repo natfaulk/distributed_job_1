@@ -7,7 +7,7 @@ from numpy.random import seed
 from tensorflow import keras
 import tensorflow as tf
 
-from . import entry
+from . import distModel
 from . import loader
 from . import utils
 
@@ -36,7 +36,7 @@ def run(_l,_p,_h,_o):
   random.seed(42)
   tf.random.set_seed(42)
 
-  training_x,training_y,validation_x,validation_y=entry.loadTraining()
+  training_x,training_y,validation_x,validation_y,test_x,test_y=distModel.loadTraining()
 
   print('Current Model:')
   print('N layers:',_l)
