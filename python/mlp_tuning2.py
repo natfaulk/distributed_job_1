@@ -1,8 +1,11 @@
 import os
 import pickle
+import random
 import shutil
 
+from numpy.random import seed
 from tensorflow import keras
+import tensorflow as tf
 
 from . import entry
 from . import loader
@@ -28,6 +31,11 @@ def modelNameToParams(_modelName):
   return out
 
 def run(_l,_p,_h,_o):
+  os.environ['PYTHONHASHSEED']=str(42)
+  seed(42)
+  random.seed(42)
+  tf.random.set_seed(42)
+
   training_x,training_y,validation_x,validation_y=entry.loadTraining()
 
   print('Current Model:')
@@ -47,7 +55,7 @@ def run(_l,_p,_h,_o):
     model.add(keras.layers.Dense(_p, activation=_h))
   model.add(keras.layers.Dense(1, activation=_o))
 
-  es = keras.callbacks.EarlyStopping(verbose=1, patience=100)
+  es = keras.callbacks.EarlyStopping(verbose=1, patience=300)
   mc = keras.callbacks.ModelCheckpoint(os.path.join(MODEL_PATH,MODEL_NAME), monitor='val_mse', mode='min', verbose=1, save_best_only=True)
   
   model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mae','mse'])
