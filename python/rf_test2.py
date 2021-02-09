@@ -1,4 +1,3 @@
-from client.job.python import distModel
 import json
 import os
 import random
@@ -7,7 +6,6 @@ from sklearn.ensemble import RandomForestRegressor
 from numpy.random import seed
 import numpy as np
 
-from . import entry
 from . import loader
 from . import process
 from . import utils
@@ -60,7 +58,7 @@ def run(_ne,_md,_mln,_mss,_msl):
   RF_MODEL_NAME=makeModelPath(_ne,_md,_mln,_mss,_msl)
 
   # LOAD
-  training_x,training_y,validation_x,validation_y=distModel.loadTraining()
+  training_x,training_y,validation_x,validation_y,test_x,test_y=distModel.loadTraining()
   testnf_x, testnf_y = loadNF()
 
   print(f'Training for n_estimators {_ne}, max depth {_md}, max_leaf_nodes {_mln}, min_samples_split {_mss}, min_samples_leaf {_msl}:')
